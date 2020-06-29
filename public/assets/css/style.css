@@ -1,0 +1,25 @@
+body {
+    /* margin: 10px 10px; */
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 900px;
+    /* margin: 0 auto; */
+  }
+
+
+.flash {
+    border: 2px solid red;
+    background-color: red;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.statusVenda {
+  width: 20px;
+}
