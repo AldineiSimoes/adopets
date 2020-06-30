@@ -19,6 +19,7 @@ class RestController extends Controller
 
     public function getRequest()
     {
+
         switch($this->getMethod())
         {
             case 'GET' :

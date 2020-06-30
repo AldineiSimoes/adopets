@@ -11,11 +11,13 @@ class User extends Model {
 	public $name;
 	public $token;
 
-	public function getName() {
+	public function getName() 
+	{
 		return $this->Name;
 	}
 
-	public function getId() {
+	public function getId() 
+	{
 		return $this->id;
 	}
 
@@ -41,7 +43,7 @@ class User extends Model {
         $sql->execute();
         if ($sql->rowCount() > 0)
         {
-            $data = $sql->fetchAll();
+            $data = $sql->fetch();
 			return $data;
 		}
 		return false;
@@ -49,8 +51,8 @@ class User extends Model {
 	
 	public function add()
 	{
-        $sql = "insert into users (uuid,name, email, password)
-                values (uuid(),:name,:email,:password)";
+        $sql = "insert into users (id,name, email, password)
+				values (uuid(),:name,:email,:password)";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(':name', $this->name);
         $sql->bindValue(':email', $this->email);

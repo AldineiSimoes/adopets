@@ -2,20 +2,11 @@
 namespace src\Controllers;
 
 use \core\Controller;
-use \src\handlers\LoginHandler;
-use src\handlers\UserHandler;
+use src\controllers\LoginController;
+
 use src\models\User;
 
 class UsersController extends Controller {
-
-    public function __construct() 
-    {
-        $this->loggedUser = LoginHandler::checkLogin();
-        if($this->loggedUser == false){
-            exit;
-        }
-
-	}
 
     public function add()
     {
@@ -26,6 +17,7 @@ class UsersController extends Controller {
         $user->email = $data['email'];
         $user->password = $data['password'];
         $user->add();
+        echo json_encode('Cadastrado');
     }
   
 }

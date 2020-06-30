@@ -13,19 +13,28 @@ class Product extends Model {
 
     public function add()
     {
-        $sql = "insert into products (uuid,name, description, category,price, quantity)
-                values (uuid(),:name,:description,:category,:price,:quantity)";
-        $sql = $this->db->prepare($sql);
-        $sql->bindValue(':name', $this->name);
-        $sql->bindValue(':description', $this->description);
-        $sql->bindValue(':category', $this->category);
-        $sql->bindValue(':price', $this->price);
-        $sql->bindValue(':quantity', $this->quantity);
-        $sql->execute();
+        $div = new Diversos();
+        $div->logMsg('Incluindo produto');
+        try{
+            $sql = "insert into products (uuid,name, description, category,price, quantity)
+                    values (uuid(),:name,:description,:category,:price,:quantity)";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(':name', $this->name);
+            $sql->bindValue(':description', $this->description);
+            $sql->bindValue(':category', $this->category);
+            $sql->bindValue(':price', $this->price);
+            $sql->bindValue(':quantity', $this->quantity);
+            $sql->execute();
+        } catch(PDOException $e) {
+            $div->logMsg("ERRO: ".$e->getMessage(),'error');
+            exit;
+        }
     }
 
     public function edit()
     {
+        $div = new Diversos();
+        $div->logMsg('Alterando produto');
         try
         {
             $sql = "update products set name=:name
@@ -43,7 +52,7 @@ class Product extends Model {
             $sql->bindValue(':quantity', $this->quantity);
             $sql->execute();
         } catch(PDOException $e) {
-            echo "ERRO: ".$e->getMessage();
+            $div->logMsg("ERRO: ".$e->getMessage(),'error');
             exit;
         }
 		return false;
@@ -51,15 +60,23 @@ class Product extends Model {
 
     public function del($id)
     {
-        $sql = "DELETE FROM products where uuid like :id";
-        $sql = $this->db->prepare($sql);
-        $sql->bindValue(':id', $id);
-        $sql->execute();
-    }
+        $div = new Diversos();
+        $div->logMsg('Exlcuindo produto');
+        try
+        {
+            $sql = "DELETE FROM products where uuid like :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(':id', $id);
+            $sql->execute();
+        } catch(PDOException $e) {
+            $div->logMsg("ERRO: ".$e->getMessage(),'error');
+            exit;
+        }
+}
 
-    public function getListName($name = '')
+    public function getListName($name)
     {
-        $sql = "SELECT * FROM products where name like :name".'%';
+        $sql = "SELECT * FROM products where name like :name".'"%"';
         $sql = $this->db->prepare($sql);
         $sql->bindValue(':name', $name);
         $sql->execute();
@@ -71,9 +88,9 @@ class Product extends Model {
 		return false;
     }
 
-    public function getListDescription($description = '')
+    public function getListDescription($description)
     {
-        $sql = "SELECT * FROM products where description like :description".'%';
+        $sql = "SELECT * FROM products where description like :description".'"%"';
         $sql = $this->db->prepare($sql);
         $sql->bindValue(':description', $description);
         $sql->execute();
@@ -85,9 +102,9 @@ class Product extends Model {
 		return false;
     }
 
-    public function getListCategory($category = '')
+    public function getListCategory($category)
     {
-        $sql = "SELECT * FROM products where category like :category".'%';
+        $sql = "SELECT * FROM products where category like :category".'"%"';
         $sql = $this->db->prepare($sql);
         $sql->bindValue(':category', $category);
         $sql->execute();

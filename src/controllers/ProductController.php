@@ -2,7 +2,6 @@
 namespace src\controllers;
 
 use \core\Controller;
-use \src\handlers\LoginHandler;
 use src\models\Product;
 
 class ProductController extends Controller {
@@ -11,16 +10,15 @@ class ProductController extends Controller {
 
     public function __construct() 
     {
-        // $this->loggedUser = LoginHandler::checkLogin();
+        // $this->loggedUser = LoginController::checkLogin();
         // if($this->loggedUser == false){
-        //     $this->redirect("/login");
         //     exit;
         // }
 
 	}
 
     public function add()
-    {
+    {   
         $product = new Product();
         $rest = new RestController;
         $data = $rest->getRequest();
@@ -30,6 +28,7 @@ class ProductController extends Controller {
         $product->price = $data['price'];
         $product->quantity = $data['quantity'];
         $product->add();
+        echo json_encode('cadastrado');
         
     }
 
@@ -45,6 +44,7 @@ class ProductController extends Controller {
         $product->price = $data['price'];
         $product->quantity = $data['quantity'];
         $product->edit();
+        echo json_encode('alterado');
         
     }
 
@@ -53,7 +53,32 @@ class ProductController extends Controller {
         $product = new Product();
         $id = $id['id'];
         $product->del($id);
-        
+        echo json_encode('excluido');
+      
+    }
+
+    public function getListName($name = '')
+    {
+        $product = new Product();
+        $name = $name['name'];
+        $data = $product->getListName($name);
+        echo json_encode($data);
+    }
+
+    public function getListDescription($param = '')
+    {
+        $product = new Product();
+        $param = $param['description'];
+        $data = $product->getListDescription($param);
+        echo json_encode($data);
+    }
+
+    public function getListCategory($param = '')
+    {
+        $product = new Product();
+        $param = $param['category'];
+        $data = $product->getListCategory($param);
+        echo json_encode($data);
     }
 
 }
