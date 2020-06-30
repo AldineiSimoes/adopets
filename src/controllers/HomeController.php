@@ -15,15 +15,6 @@ class HomeController extends Controller {
             $this->redirect("/login");
             exit;
         }
-
-		$this->arrayInfo = array(
-			'user' => $this->loggedUser,
-			'menuActive' => 'home'
-		);
 	}
-
-    public function index() {
-        $this->render('home',$this->arrayInfo);
-    }
 
 }
